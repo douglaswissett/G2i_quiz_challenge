@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Dimensions
 } from 'react-native';
+import HTMLView from 'react-native-htmlview';
+
 const window = Dimensions.get('window');
 
 export default class Result extends React.Component {
@@ -46,13 +48,15 @@ export default class Result extends React.Component {
               <View key={i} style={styles.sectionRow}>
                 <View style={styles.sectionRowIcon}>
                   { correct ? (
-                    <Text style={styles.h1}>+</Text>
+                    <Text style={[styles.h1,{color: '#60ff26'}]}>+</Text>
                     ) : (
-                    <Text style={styles.h1}>-</Text>
+                    <Text style={[styles.h1, {color: '#ff4026'}]}>-</Text>
                   )}
                 </View>
                 <View style={{flex: 8}}>
-                  <Text style={correct ? {color: '#60ff26'} : {color: '#ff4026'} }>{question.question}</Text>
+                  <HTMLView
+                    value={`<p>${question.question}</p>`}
+                    stylesheet={styles} />
                 </View>
               </View>
             )

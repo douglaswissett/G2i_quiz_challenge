@@ -7,6 +7,7 @@ import {
   Dimensions,
   ActivityIndicator
 } from 'react-native';
+import HTMLView from 'react-native-htmlview';
 
 const window = Dimensions.get('window');
 
@@ -66,14 +67,21 @@ export default class Question extends React.Component {
             onPress={this._onPressButton.bind(this)}>
             { selector ? (
               <View style={styles.selector}>
-                <View style={{flex: 1, backgroundColor: '#60ff26'}}>
+
+                <TouchableOpacity
+                  onPress={this._onPressButton.bind(this)}
+                  style={styles.selectorClose}>
+                  <Text style={[styles.p,{fontWeight: 'bold'}]}>X</Text>
+                </TouchableOpacity>
+
+                <View style={{flex: 1, backgroundColor: '#9cff8d'}}>
                   <TouchableOpacity
                     onPress={() => this._answerQuestion('True')}
                     style={styles.selectorBtn}>
                     <Text style={[styles.p,{fontWeight: 'bold'}]}>True</Text>
                   </TouchableOpacity>
                 </View>
-                <View style={{flex: 1, backgroundColor: '#ff4026'}}>
+                <View style={{flex: 1, backgroundColor: '#ff8d8d'}}>
                   <TouchableOpacity
                     onPress={() => this._answerQuestion('False')}
                     style={styles.selectorBtn}>
@@ -82,7 +90,9 @@ export default class Question extends React.Component {
                 </View>
               </View>
               ) : (
-              <Text style={styles.p}>{questions[current].question}</Text>
+              <HTMLView
+                value={`<p>${questions[current].question}</p>`}
+                stylesheet={styles} />
             )}
           </TouchableOpacity>
           ) : (
@@ -131,5 +141,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  selectorClose: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    width: 80,
+    height: 70,
+    zIndex: 1
   }
 });
